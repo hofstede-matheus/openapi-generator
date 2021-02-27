@@ -7,8 +7,15 @@
  * => ApiException(404, someErrorMessageObject)
  *
  */
-export class ApiException<T> extends Error {
-    public constructor(public code: number, public body: T) {
-        super("HTTP-Code: " + code + "\nMessage: " + JSON.stringify(body))  
-    }
+export class ApiException implements HTTPError {
+  public status: number;
+  public message: string;
+  public constructor(public code: number, public body: string) {
+        this.status = code;
+        this.message = body;
+  }
+}
+export interface HTTPError {
+  status: number,
+  message: string
 }

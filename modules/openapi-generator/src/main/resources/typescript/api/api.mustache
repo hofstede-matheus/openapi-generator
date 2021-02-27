@@ -211,7 +211,8 @@ export class {{classname}}ResponseProcessor {
         }
 
         let body = response.body || "";
-        throw new ApiException<string>(response.httpStatusCode, "Unknown API Status Code!\nBody: \"" + body + "\"");
+        let text = await body.text()
+        throw new ApiException(response.httpStatusCode, JSON.parse(text).message);
     }
 
     {{/operation}}
